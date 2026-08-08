@@ -1,0 +1,7 @@
+# Claude Code ローカル設定
+CLAUDE.local.md
+.claude/settings.local.json
+
+# 秘匿情報(*.local.example.* はコミットしてよい)
+.env
+*.local.json
