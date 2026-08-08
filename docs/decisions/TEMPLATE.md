@@ -1,8 +1,15 @@
+---
+status: accepted   # accepted | superseded | deprecated
+date: YYYY-MM-DD
+tags: []           # 任意。例: [infra, auth]
+---
+
 # <タイトル>(YYYY-MM-DD 決定)
 
 <!--
 ファイル名: YYYYMMDD-<slug>.md(1 決定 1 ファイル)。
 確定した記録の本文は書き換えない。決定を覆すときは新しい記録を作り、旧記録の「更新」に追記でリンクする。
+覆すときは旧記録の frontmatter も同時に直す: status を superseded に変え、superseded-by: <新ファイル名> を追加する(「更新」節だけ追記して status を変え忘れない)。
 -->
 
 ## 決定

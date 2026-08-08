@@ -1,3 +1,9 @@
+---
+status: accepted
+date: 2026-08-08
+tags: [template, workflow]
+---
+
 # AI エージェント用リポジトリテンプレートの設計(2026-08-08 決定)
 
 既存リポジトリ(my-life-os / dayglassbar / MindMeshMap / kanji-verse / blogs / game_ideation)の CLAUDE.md・.claude・docs を横断調査し、リポジトリ非依存で流用できる運用パターンを新規リポジトリ用テンプレートとして固めた。このファイルはテンプレート自身の設計記録であり、テンプレートから作られたリポジトリでは /repo-init が削除する。
@@ -36,4 +42,4 @@
 
 ## 更新
 
-(追記式)
+- 2026-08-08: 決定記録に YAML frontmatter(status / date / tags。覆し時は superseded-by を追加)を導入。MADR 現行版の公式 frontmatter 対応に整合。目的は、先頭数行の grep だけで生きている決定を判別でき、失効した決定を誤って前提にする事故を防ぐこと。
