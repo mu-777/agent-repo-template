@@ -20,3 +20,9 @@ AI コーディングエージェント(Claude Code)を前提にした新規リ�
 | .claude/skills/repo-init/ | 初回セットアップスキル(実行後に自己削除) |
 
 設計の経緯・不採用案は [docs/decisions/20260808-template-design.md](docs/decisions/20260808-template-design.md) を参照。
+
+## テンプレート自体の保守
+
+- テンプレートを直すときはこのリポジトリ(ローカル: `~/dev/config/agent-repo-template`)を編集して main へコミット・push する
+- テンプレートの変更は作成済みのリポジトリへ伝播しない(次に作る新規リポジトリから反映される)
+- このリポジトリ自身の中で `/repo-init` を実行しない(AGENTS.md のスケルトン・「(未記入)」はテンプレートの成果物。repo-init 側にもガードあり)
