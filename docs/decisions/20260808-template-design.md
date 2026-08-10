@@ -43,3 +43,4 @@ tags: [template, workflow]
 ## 更新
 
 - 2026-08-08: 決定記録に YAML frontmatter(status / date / tags。覆し時は superseded-by を追加)を導入。MADR 現行版の公式 frontmatter 対応に整合。目的は、先頭数行の grep だけで生きている決定を判別でき、失効した決定を誤って前提にする事故を防ぐこと。
+- 2026-08-11: 一行要約を frontmatter の `description` として持たせる案を検討し、**不採用**。代わりに TEMPLATE.md の H1 直後に「リード文(必須・1〜2 行)」スロットを明文化し、AGENTS.md に決定記録の走査手順(タイトル一覧 grep + 本文キーワード grep + status 確認)を追加した。理由: エージェントは frontmatter のフィールドではなく本文全体を grep するため、検索面としては本文 > 一行要約。とくに逆戻りガードが発火するのは「不採用案」の語(連番方式・cookiecutter 等)にヒットしたときで、それらは要約には決して載らない。`.claude/rules/` の `paths:` が frontmatter だけで効くのは専用ローダがあるからで、決定記録には frontmatter だけ読んで採否を決める recall 層が存在しない(この点がメモリ機構との違い)。加えて description はタイトル・「決定」節と三重に重複し、「本文は書き換えない」運用下で腐る箇所を増やし、MADR 公式 frontmatter にも存在しない。**再検討の条件**: docs を静的サイト化して meta description に使う場合、または決定記録のインデックスを自動生成する場合(＝ frontmatter だけを読む消費者が実際に現れたとき)。
