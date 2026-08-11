@@ -1,6 +1,7 @@
 ---
 status: accepted
 date: 2026-08-08
+updated: 2026-08-11
 tags: [template, workflow]
 ---
 
@@ -12,15 +13,19 @@ tags: [template, workflow]
 
 1. **配布方式**: GitHub Template Repository(private)+ 同梱の `/repo-init` スキルによる自己ブートストラップ(ヒアリング → 空欄記入 → 自己削除)
 2. **指示書構成**: CLAUDE.md は `@AGENTS.md` の 1 行スタブ。AGENTS.md にはリポジトリ固有の事実のみ(グローバル ~/.claude/AGENTS.md と重複させない)。200 行以下・コードで分かることは書かない
-3. **決定記録**: `docs/decisions/YYYYMMDD-<slug>.md` の 1 決定 1 ファイル。書式は MADR を拡張(不採用案と理由=逆戻りガード・前提と再検討条件・追記式更新)
-4. **learnings**: 生の学びファイルを持たず、コミットされる行き先に蒸留する(AGENTS.md 地雷リスト / .claude/rules/ paths 指定 / docs/decisions / docs/<topic> / skills / グローバル AGENTS.md)。Auto memory は揮発性キャッシュ扱い
-5. **人間向け解説資料は HTML**(自己完結)。Claude が読む作業ドキュメントは md
+3. **決定記録**: `docs/decisions/YYYYMMDD-<slug>.md` の 1 決定 1 ファイル。書式は MADR を拡張し、frontmatter(status / date / updated / tags、覆し時は superseded-by)+ 必須のリード文 + 決定 / 理由 / 不採用案と理由(逆戻りガード)/ 前提と再検討の条件
+4. **決定記録の保守**: 本文は常に現在の到達点に書き換える(追記式の「更新」節は持たない)。履歴は git に任せる。例外は決定そのものが覆るときで、そのときだけ旧記録の本文を凍結し新記録 + `status: superseded` に切り替える
+5. **learnings**: 生の学びファイルを持たず、コミットされる行き先に蒸留する(AGENTS.md 地雷リスト / .claude/rules/ paths 指定 / docs/decisions / docs/<topic> / skills / グローバル AGENTS.md)。Auto memory は揮発性キャッシュ扱い
+6. **人間向け解説資料は HTML**(自己完結)。Claude が読む作業ドキュメントは md
 
 ## 理由
 
 - Template Repository は履歴を引き継がず 1 コマンドで複製でき、追加ツール不要。新リポジトリの最初のセッションは必ず Claude Code なので、プレースホルダ記入は Actions ではなくスキルの対話で行うのが簡単(CI 不要・ヒアリング可能)
 - `@AGENTS.md` スタブは Claude Code 公式ドキュメント記載の推奨パターン。Codex 等 AGENTS.md を直接読むエージェントとの互換も取れる
 - 日付プレフィックスのファイル名は並行ブランチで連番衝突せず、時系列ソートが付く。小さい独立ファイルは Grep で該当決定だけ読める
+- frontmatter の `status` により、先頭数行の grep だけで生きている決定を判別でき、失効した決定を誤って前提にする事故を防げる。MADR 現行版の公式 frontmatter 対応とも整合する
+- 一行要約ではなく本文冒頭のリード文を必須スロットにしたのは、エージェントが frontmatter のフィールドではなく本文全体を grep するため。検索面としては本文 > 要約で、とくに逆戻りガードが発火するのは「不採用案」の語(連番方式・cookiecutter 等)にヒットしたときだが、それらは要約には決して載らない
+- 本文を書き換える運用にしたのは、追記式だと「決定」節が古いまま残り、読み手が毎回「決定 + 更新」の差分を自分で合成することになるため。合成を忘れた時点で古い決定に従ってしまう。記録不変性は git 履歴(`git log -p`)で担保でき、エージェントによる全体書き換えのコストは十分小さい
 - 複数マシンで開発するため、学びはすべて git 同期される場所に置く必要がある。`.claude/rules/` の paths 指定は「コミットされ・該当領域を触ったときだけロードされる」公式機構で、常時ロードの 200 行予算を消費しない
 
 ## 不採用案と理由(逆戻りガード)
@@ -30,6 +35,8 @@ tags: [template, workflow]
 - **cookiecutter 等の scaffold ツール** — 追加ツール依存。プレースホルダ構文がファイルを汚す
 - **決定記録の連番方式(0001-)** — 並行ブランチで番号が衝突する
 - **決定記録の単一ファイル §N 方式** — 1 ファイルが肥大し、読み込みコストが上がる
+- **決定記録に追記式の「更新」節を持たせる(ADR 慣行の記録不変性)** — 本文が古いまま放置され、読み手が差分合成を強いられる。不変性が慣行なのは履歴の残らない置き場(wiki 等)が前提で、git 管理下では不要。ただし決定が覆るときだけは旧記録を凍結する(新記録が参照する「当時の理由」が消えるため)
+- **一行要約を frontmatter の `description` に持たせる** — 決定記録には frontmatter だけ読んで採否を決める recall 層が存在しない(`.claude/rules/` の `paths:` が frontmatter だけで効くのは専用ローダがあるから)。タイトル・「決定」節と三重に重複し、MADR 公式 frontmatter にも存在しない
 - **learnings.md(単一ファイル)** — ロードする機構がなく死蔵するか、常時ロードで肥大するかの二択
 - **Auto memory を learnings の正にする** — マシンローカルで同期されない。複数マシン開発と両立しない
 - **autoMemoryDirectory をリポジトリ内に向けて Auto memory をコミット** — 未レビューのメモが履歴に混ざる・複数マシンでコンフリクト・「コミットは指示時のみ」の運用と常時書き込みが噛み合わない
@@ -38,9 +45,6 @@ tags: [template, workflow]
 
 - Claude Code は AGENTS.md をネイティブに読まない(2026-08 時点、anthropics/claude-code#34235 が open)。ネイティブ対応されたら CLAUDE.md スタブは不要になる
 - `.claude/rules/` の paths 指定・Auto memory の仕様(2026-08 時点の公式ドキュメント)が前提。仕様変更時は learnings の行き先を見直す
+- 決定記録が git 管理下にあり `git log -p` で過去版を辿れることが前提。履歴の残らない置き場へ移すなら追記式に戻す
+- frontmatter だけを読む消費者が実際に現れたら(docs の静的サイト化で meta description に使う・決定記録のインデックスを自動生成する)`description` フィールドの採否を再検討する
 - テンプレートの更新は既存リポジトリへ伝播しない(新規作成時のみ反映)。既存リポジトリへの遡及適用はしない方針
-
-## 更新
-
-- 2026-08-08: 決定記録に YAML frontmatter(status / date / tags。覆し時は superseded-by を追加)を導入。MADR 現行版の公式 frontmatter 対応に整合。目的は、先頭数行の grep だけで生きている決定を判別でき、失効した決定を誤って前提にする事故を防ぐこと。
-- 2026-08-11: 一行要約を frontmatter の `description` として持たせる案を検討し、**不採用**。代わりに TEMPLATE.md の H1 直後に「リード文(必須・1〜2 行)」スロットを明文化し、AGENTS.md に決定記録の走査手順(タイトル一覧 grep + 本文キーワード grep + status 確認)を追加した。理由: エージェントは frontmatter のフィールドではなく本文全体を grep するため、検索面としては本文 > 一行要約。とくに逆戻りガードが発火するのは「不採用案」の語(連番方式・cookiecutter 等)にヒットしたときで、それらは要約には決して載らない。`.claude/rules/` の `paths:` が frontmatter だけで効くのは専用ローダがあるからで、決定記録には frontmatter だけ読んで採否を決める recall 層が存在しない(この点がメモリ機構との違い)。加えて description はタイトル・「決定」節と三重に重複し、「本文は書き換えない」運用下で腐る箇所を増やし、MADR 公式 frontmatter にも存在しない。**再検討の条件**: docs を静的サイト化して meta description に使う場合、または決定記録のインデックスを自動生成する場合(＝ frontmatter だけを読む消費者が実際に現れたとき)。
