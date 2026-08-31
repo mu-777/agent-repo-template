@@ -17,7 +17,7 @@ description: テンプレート(agent-repo-template)から作られた新規リ�
 3. **AGENTS.md を埋める**: 各節の「(未記入)」をヒアリング結果で置き換え、冒頭の repo-init 案内行を削除する。書きすぎない(200 行以下・コード/README で分かることは書かない。トークンは落とし穴に使う)。
 4. **README.md を書き直す**: テンプレートの説明をすべて消し、このプロジェクトの確定事実のみで書く。
 5. **決定記録**: この時点で選択肢を比較して決めたこと(技術スタック等)があれば `docs/decisions/YYYYMMDD-<slug>.md` を TEMPLATE.md の書式で作る。何も決めていなければ作らない。
-6. **テンプレート由来ファイルの削除**: `docs/decisions/20260808-template-design.md`(テンプレート自身の設計記録)と `.claude/skills/repo-init/`(このスキル)を削除する。`docs/decisions/TEMPLATE.md` は残す。**Web アプリ / Web サイトでないリポジトリなら `.claude/skills/web-seo/` `.claude/skills/web-share-assets/` `.claude/skills/web-deploy/` も削除する**(Web なら残す)。
+6. **テンプレート由来ファイルの削除**: `docs/decisions/20260808-template-design.md`(テンプレート自身の設計記録)と `.claude/skills/repo-init/`(このスキル)を削除する。`docs/decisions/TEMPLATE.md` は残す。**Web アプリ / Web サイトでないリポジトリなら `.claude/skills/web-seo/` `.claude/skills/web-share-assets/` `.claude/skills/web-deploy/` `.claude/skills/web-visual-check/` も削除する**(Web なら残す)。
 7. **報告**: 変更一覧を報告し、コミットするかユーザーに確認する(コミットは指示があったときだけ)。
 
 ## 注意

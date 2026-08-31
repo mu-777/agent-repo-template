@@ -5,7 +5,7 @@ description: Web アプリの共有まわりの画像とメタを作る手順。
 
 # web-share-assets — OGP・共有画像・ファビコン
 
-ホスティング先を問わず共通。検索での見え方は [web-seo](../web-seo/SKILL.md)、公開作業は [web-deploy](../web-deploy/SKILL.md)。
+ホスティング先を問わず共通。検索での見え方は [web-seo](../web-seo/SKILL.md)、公開作業は [web-deploy](../web-deploy/SKILL.md)、生成物の目視と機械検査は [web-visual-check](../web-visual-check/SKILL.md)。
 
 ---
 

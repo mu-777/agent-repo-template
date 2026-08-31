@@ -7,7 +7,7 @@ description: Web アプリ・Web サイトを検索エンジンに正しく出�
 
 ホスティング先(GitHub Pages / Cloudflare / その他)を問わず共通の手順。**ホスティング固有の差は「オリジン直下を持てるか」「配信される HTML は何枚か」の 2 つに集約される**ので、まずそこを確定させてから施策を選ぶ。
 
-シェア画像(OGP)は [web-share-assets](../web-share-assets/SKILL.md)、公開作業そのものは [web-deploy](../web-deploy/SKILL.md)。
+シェア画像(OGP)は [web-share-assets](../web-share-assets/SKILL.md)、公開作業そのものは [web-deploy](../web-deploy/SKILL.md)、画面の見た目の確認は [web-visual-check](../web-visual-check/SKILL.md)。
 
 ---
 

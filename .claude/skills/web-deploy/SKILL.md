@@ -5,7 +5,7 @@ description: Web アプリを静的ホスティング(GitHub Pages / Cloudflare 
 
 # web-deploy — 公開の設定と、公開後にしか分からないこと
 
-ホスティング先を問わず共通。検索での見え方は [web-seo](../web-seo/SKILL.md)、共有画像は [web-share-assets](../web-share-assets/SKILL.md)。
+ホスティング先を問わず共通。検索での見え方は [web-seo](../web-seo/SKILL.md)、共有画像は [web-share-assets](../web-share-assets/SKILL.md)、公開前の見た目の確認は [web-visual-check](../web-visual-check/SKILL.md)。
 
 ---
 
